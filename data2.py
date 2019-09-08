@@ -1,65 +1,50 @@
 import csv
 import random
+from itertools import count
 import time
-import collections
-import math
-x_value = 0
-temp = random.randint(0, 24)
-pressure = random.randint(0, 2)
-speed = random.randint(0, 10)
-rotation = random.randint(0, 15)
-height = random.randint(0, 17)
-rnge = random.randint(0, 5)
-humidity = random.randint(0, 9)
-momentum = random.randint(0, 2)
+x = 0
+y1 = random.uniform(0, 24)
+y2 = random.uniform(0, 2)
+y3 = random.uniform(0, 74)
+y4 = random.uniform(0, 14)
+y5 = random.uniform(0, 29)
+y6 = random.uniform(0, 22)
+y7 = random.uniform(0, 8)
+y8 = random.uniform(0, 4)
 
+fieldnames = ["x", "y1", "y2", "y3", "y4", "y5", "y6", "y7", "y8"]
 
-de = collections.deque([0])
+index = count()
 
-fieldnames = ["x_value", "temp","pressure","speed","rotation","height","rnge","humidity","momentum"]
-
-
-with open('data.csv', 'w') as csv_file:
+with open('data1.csv', 'w') as csv_file:
     csv_writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
     csv_writer.writeheader()
 
-while True:
+    while next(index) < 100:
 
-    with open('data.csv', 'a') as csv_file:
-        csv_writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+            info = {
+                "x": x,
+                "y1": y1,
+                "y2": y2,
+                "y3": y3,
+                "y4": y4,
+                "y5": y5,
+                "y6": y6,
+                "y7": y7,
+                "y8": y8
+            }
+            csv_writer.writerow(info)
+            # print(x_value, y_value)
 
-        info = {
-            "x_value": de[-1],
-            "temp": temp,
-            "pressure": pressure,
-            "speed": speed,
-            "rotation": rotation,
-            "height": height,
-            "rnge": rnge,
-            "humidity": humidity,
-            "momentum": momentum
+            x += 1
+            y1 += random.uniform(-5, 10)
+            y2 += random.uniform(-14, 13)
+            y3 += random.uniform(-10, 17)
+            y4 += random.uniform(-7, 10)
+            y5 += random.uniform(-5, 12)
+            y6 += random.uniform(-16, 16)
+            y7 += random.uniform(-5, 6)
+            y8 += random.uniform(-9, 9)
 
-        }
-
-        csv_writer.writerow(info)
-
-        x_value = (x_value+1)%100
-        
-        temp = temp + random.randint(-5, 10)
-        pressure = pressure +  random.randint(-5, 10)
-        speed = speed + math.sqrt(2*10*height)
-        rotation = rotation + random.randint(0, 60)
-
-        height = height + 10
-
-        rnge = rnge + random.randint(-10, 7)
-
-        humidity = humidity + random.randint(-5, 25)
-
-        momentum= momentum + random.randint(-1, 10)
-
-        print(x_value, temp,pressure,speed,rotation,height,rnge,humidity,momentum)
-       
-        
-
-    time.sleep(1)
+csv_file.close()
+time.sleep(1)
